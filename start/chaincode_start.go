@@ -76,7 +76,7 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string)
         return nil, err
     }
      name = "carbontax"                          
-	converted, err = (strconv.Atoi(value)/100)*4
+	converted, err := (strconv.Atoi(value)/100)*4
 	if err != nil {
         return nil, err
     }
