@@ -60,7 +60,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 }
 
 func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-    var name, value,value1 string
+    var name, value string
     var converted int
     var err error
     fmt.Println("running write()")
@@ -76,8 +76,8 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string)
         return nil, err
     }
      name = "carbontax"                          
-    value1 = args[1]
-	converted = (strconv.Atoi(value1)/100)*4
+    value = args[1]
+	converted, _ = (strconv.Atoi(value)/100)*4
 	value = strconv.Itoa(converted)
     err = stub.PutState(name, []byte(value))  //write the variable into the chaincode state
     if err != nil {
