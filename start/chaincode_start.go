@@ -1,19 +1,12 @@
 package main
 
 import (
-
 	"errors"
-
 	"fmt"
-
 	"github.com/hyperledger/fabric/core/chaincode/shim"
-
 )
 
-// SimpleChaincode example simple Chaincode implementation
-
 type SimpleChaincode struct {
-
 }
 
 // ============================================================================================================================
@@ -23,13 +16,9 @@ type SimpleChaincode struct {
 // ============================================================================================================================
 
 func main() {
-
 	err := shim.Start(new(SimpleChaincode))
-
 	if err != nil {
-
 		fmt.Printf("Error starting Simple chaincode: %s", err)
-
 	}
 
 }
@@ -41,7 +30,11 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
         return nil, errors.New("Incorrect number of arguments. Expecting 1")
     }
 
-    err := stub.PutState("hello_world", []byte(args[0]))
+    err := stub.PutState("emit_level", []byte(args[0]))
+    if err != nil {
+        return nil, err
+    }
+    err := stub.PutState("carbontax", []byte(""))
     if err != nil {
         return nil, err
     }
@@ -74,8 +67,14 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string)
         return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the variable and value to set")
     }
 
-    name = args[0]                            //rename for fun
+    name = args[0]                            
     value = args[1]
+    err = stub.PutState(name, []byte(value))  //write the variable into the chaincode state
+    if err != nil {
+        return nil, err
+    }
+     name = "carbontax"                          
+    value = args[1]/100
     err = stub.PutState(name, []byte(value))  //write the variable into the chaincode state
     if err != nil {
         return nil, err
