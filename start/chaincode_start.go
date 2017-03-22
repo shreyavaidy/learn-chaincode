@@ -76,10 +76,7 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string)
         return nil, err
     }
      name = "carbontax"                          
-	converted, err := (strconv.Atoi(value)/100)*4
-	if err != nil {
-        return nil, err
-    }
+	converted, _ = strconv.Atoi(value)/100*4
 	value = strconv.Itoa(converted)
     err = stub.PutState(name, []byte(value))  //write the variable into the chaincode state
     if err != nil {
