@@ -77,8 +77,8 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string)
 	//prevvaluecon, _ := strconv.Atoi(prevvalue)
 	//tax := prevvaluecon+converted
 	//value = strconv.Itoa(tax)
-    	value="45"
-	err = stub.PutState(name, []byte(value))  //write the variable into the chaincode state
+    value = "45"
+    err = stub.PutState(name, []byte(value))  //write the variable into the chaincode state
     if err != nil {
         return nil, err
     }
