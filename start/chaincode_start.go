@@ -78,7 +78,8 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string)
      name = "carbontax"                          
 	converted, _ = strconv.Atoi(value)
 	converted = converted/100
-	prevvalue, _ := stub.GetState(name)
+	//prevvalue, _ := stub.GetState(name)
+	prevvalue := "45"
 	prevvaluecon, _ := strconv.Atoi(prevvalue)
 	tax := prevvaluecon+converted
 	value = strconv.Itoa(tax)
