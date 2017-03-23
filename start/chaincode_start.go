@@ -3,7 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
-	//"strconv"
+	"strconv"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
@@ -58,7 +58,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
     var name, value string
-    //var converted int
+    var converted int
     var err error
     fmt.Println("running write()")
 
@@ -70,14 +70,13 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string)
     value = args[1]
     err = stub.PutState(name, []byte(value))  //write the variable into the chaincode state
      name = args[2]                          
-	//converted, _ = strconv.Atoi(value)
-	//converted = converted/100
-	//prevvalue, _ := stub.GetState(name)
-	//prevvalue := "45"
-	//prevvaluecon, _ := strconv.Atoi(prevvalue)
-	//tax := prevvaluecon+converted
-	//value = strconv.Itoa(tax)
-    value = args[1]
+	converted, _ = strconv.Atoi(value)
+	converted = converted/100
+	prevvalue, _ := stub.GetState(name)
+	prevvaluecon, _ := strconv.Atoi(prevvalue)
+	tax := prevvaluecon+converted
+	value = strconv.Itoa(tax)
+
     err = stub.PutState(name, []byte(value))  //write the variable into the chaincode state
     if err != nil {
         return nil, err
